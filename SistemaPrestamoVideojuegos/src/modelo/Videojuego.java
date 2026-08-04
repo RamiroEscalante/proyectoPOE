@@ -52,4 +52,20 @@ public class Videojuego {
     public EstadoVideojuego getDisponibilidad(){
         return this.disponibilidad;
     }
+    
+    public boolean estaDisponible(){
+        return disponibilidad == EstadoVideojuego.DISPONIBLE;
+    }
+    
+    public void marcarComoPrestado(){
+        this.disponibilidad = EstadoVideojuego.PRESTADO;
+    }
+    
+    public void marcarComoDisponible(){
+        this.disponibilidad = EstadoVideojuego.DISPONIBLE;
+    }
+    
+    public void marcarComoDañado(){
+        this.disponibilidad = EstadoVideojuego.DAÑADO;
+    }
 }
