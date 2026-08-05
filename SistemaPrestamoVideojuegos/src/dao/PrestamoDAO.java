@@ -68,6 +68,8 @@ public class PrestamoDAO {
                 System.out.println("FALLA EN ACTUALIZAR DISPONIBILIDAD VIDEOJUEGO");
             }
             
+            videojuegoSeleccionado = null; 
+            
             return filasModificadas > 0;
         }
         catch(SQLException e){
@@ -95,6 +97,7 @@ public class PrestamoDAO {
                      FROM prestamos AS p
                      INNER clientes AS c, videojuegos AS v
                      ON p.id_cliente = c.id AND p.id_videojuego = v.id
+                     WHERE p.entregado = false
                      """;
         
         try(
@@ -115,6 +118,8 @@ public class PrestamoDAO {
                 );
                 
                prestamos.add(prestamo);
+               clienteSeleccionado = null;
+               videojuegoSeleccionado = null;
             }
         }
         catch(SQLException e){
@@ -153,7 +158,7 @@ public class PrestamoDAO {
         return total;
     }
     
-    public boolean marcarComoEntregado(int idPrestamo){
+    public boolean marcarComoEntregado(Prestamo prestamo){
         String sql = """
                      UPDATE prestamos
                      SET entregado = ?
@@ -166,7 +171,21 @@ public class PrestamoDAO {
             ){
             
             sentencia.setBoolean(1, true);
-            sentencia.setInt(2, idPrestamo);
+            sentencia.setInt(2, prestamo.getId());
+            
+            videojuegoSeleccionado = new Videojuego(
+                    prestamo.getVideojuego().getId(),
+                    prestamo.getVideojuego().getNombre(),
+                    prestamo.getVideojuego().getConsola(), 
+                    prestamo.getVideojuego().getDisponibilidad()
+            );
+            
+            videojuegoSeleccionado.marcarComoDisponible();
+            
+            if(!videojuegoDAO.actualizar(videojuegoSeleccionado)){
+                System.out.println("Error: seccion videojuego dao");
+                return false;
+            }
             
             int filasSeleccionadas = sentencia.executeUpdate();
             

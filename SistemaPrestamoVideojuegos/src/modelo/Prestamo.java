@@ -62,7 +62,7 @@ public class Prestamo {
         return this.entregado;
     }
     
-    public boolean estaActivo(){
+    public boolean estaPrestado(){
         return !this.entregado;
     }
     
