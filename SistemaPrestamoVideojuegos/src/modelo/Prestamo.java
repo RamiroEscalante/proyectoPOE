@@ -58,7 +58,7 @@ public class Prestamo {
     }
     
     
-    public boolean isEstregado(){
+    public boolean isEntregado(){
         return this.entregado;
     }
     
