@@ -68,4 +68,9 @@ public class Videojuego {
     public void marcarComoDañado(){
         this.disponibilidad = EstadoVideojuego.DAÑADO;
     }
+    
+    @Override
+    public String toString(){
+        return nombre + " - " + consola;
+    }
 }

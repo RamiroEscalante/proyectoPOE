@@ -12,6 +12,7 @@ import dao.VideojuegoDAO;
 import java.util.ArrayList;
 import java.util.List;
 import vista.VentanaCliente;
+import vista.VentanaPrestamo;
 /**
  *
  * @author usr
@@ -28,14 +29,5 @@ public class Main {
           
           VentanaPrincipal principal = new VentanaPrincipal();
           principal.setVisible(true);
-
-           //VentanaVideojuegos videojuegos = new VentanaVideojuegos();
-          // videojuegos.setVisible(true);
-          
-          
-          //sVentanaCliente clientes = new VentanaCliente();
-          //clientes.setVisible(true);
-           
-           
     }
 }

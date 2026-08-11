@@ -44,4 +44,9 @@ public class Cliente {
     public void setEdad(int nueva_edad){
         this.edad = nueva_edad;
     }
+    
+    @Override
+    public String toString(){
+        return nombre + " - " + edad;
+    }
 }

@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package vista;
+import modelo.Prestamo;
 import vista.VentanaCliente;
 import vista.VentanaVideojuegos;
 /**
@@ -31,6 +32,7 @@ public class VentanaMenu extends javax.swing.JFrame {
         lblMenu = new javax.swing.JLabel();
         btnVideojuego = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
+        btnPrestamos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,6 +54,13 @@ public class VentanaMenu extends javax.swing.JFrame {
             }
         });
 
+        btnPrestamos.setText("Ir a Prestamos");
+        btnPrestamos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrestamosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -63,11 +72,14 @@ public class VentanaMenu extends javax.swing.JFrame {
                         .addComponent(lblMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(35, 35, 35)
+                        .addComponent(lblTituloSelecciona))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnVideojuego, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblTituloSelecciona)
-                            .addComponent(btnClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(21, Short.MAX_VALUE))
+                            .addComponent(btnClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnPrestamos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -78,9 +90,11 @@ public class VentanaMenu extends javax.swing.JFrame {
                 .addComponent(lblTituloSelecciona, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnVideojuego)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnClientes)
-                .addContainerGap(148, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnPrestamos)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -98,9 +112,16 @@ public class VentanaMenu extends javax.swing.JFrame {
         clientes.setVisible(true);
     }//GEN-LAST:event_btnClientesActionPerformed
 
+    private void btnPrestamosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrestamosActionPerformed
+        // TODO add your handling code here:
+        VentanaPrestamo prestamo = new VentanaPrestamo();
+        prestamo.setVisible(true);
+    }//GEN-LAST:event_btnPrestamosActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClientes;
+    private javax.swing.JButton btnPrestamos;
     private javax.swing.JButton btnVideojuego;
     private javax.swing.JLabel lblMenu;
     private javax.swing.JLabel lblTituloSelecciona;

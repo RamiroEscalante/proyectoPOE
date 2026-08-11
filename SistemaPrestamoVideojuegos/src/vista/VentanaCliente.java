@@ -49,6 +49,7 @@ public class VentanaCliente extends javax.swing.JFrame {
         tblClientes = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gstion de clientes");
 
         lblNombre.setText("Nombre:");
 

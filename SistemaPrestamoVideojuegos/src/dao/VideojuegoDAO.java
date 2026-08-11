@@ -53,6 +53,7 @@ public class VideojuegoDAO {
         String sql = """
                      SELECT id, nombre, consola, disponibilidad
                      FROM videojuegos
+                     WHERE disponibilidad = 'DISPONIBLE'
                      """;
         try(
                 Connection conexion = ConexionBD.obtenerConexion();

@@ -18,9 +18,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/usr/Desktop/proyectoPOE/SistemaPrestamoVideojuegos/src/modelo/Prestamo.java</file>
+            <file>file:/C:/Users/usr/Desktop/proyectoPOE/SistemaPrestamoVideojuegos/src/vista/VentanaPrestamo.java</file>
+            <file>file:/C:/Users/usr/Desktop/proyectoPOE/SistemaPrestamoVideojuegos/src/vista/VentanaVideojuegos.java</file>
+            <file>file:/C:/Users/usr/Desktop/proyectoPOE/SistemaPrestamoVideojuegos/src/vista/VentanaMenu.java</file>
             <file>file:/C:/Users/usr/Desktop/proyectoPOE/SistemaPrestamoVideojuegos/src/principal/Main.java</file>
-            <file>file:/C:/Users/usr/Desktop/proyectoPOE/SistemaPrestamoVideojuegos/src/modelo/Videojuego.java</file>
             <file>file:/C:/Users/usr/Desktop/proyectoPOE/SistemaPrestamoVideojuegos/src/dao/PrestamoDAO.java</file>
+            <file>file:/C:/Users/usr/Desktop/proyectoPOE/SistemaPrestamoVideojuegos/src/servicio/PrestamoService.java</file>
         </group>
     </open-files>
 </project-private>
