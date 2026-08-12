@@ -4,15 +4,9 @@
  */
 package principal;
 
-import modelo.ConsolaVideojuego;
-import modelo.Videojuego;
 import vista.VentanaPrincipal;
-import vista.VentanaVideojuegos;
-import dao.VideojuegoDAO;
-import java.util.ArrayList;
-import java.util.List;
-import vista.VentanaCliente;
-import vista.VentanaPrestamo;
+
+
 /**
  *
  * @author usr
@@ -23,10 +17,6 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-//        Videojuego mariokart = new Videojuego(1, "MarioKart 8 deluxe", ConsolaVideojuego.NINTENDO_SWITCH);
-//        
-//        System.out.println(mariokart.getNombre() + " Esta: " + mariokart.getDisponibilidad() + " y es de " + mariokart.getConsola());
-          
           VentanaPrincipal principal = new VentanaPrincipal();
           principal.setVisible(true);
     }
