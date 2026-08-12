@@ -28,58 +28,97 @@ public class VentanaPrestamo extends javax.swing.JFrame {
     /**
      * Creates new form VentanaPrestamo
      */
-    
     private VideojuegoController videojuegoControlador;
     private ClienteController clienteControlador;
     private PrestamoController prestamoControlador;
-    
-    private Prestamo prestamoSeleccionado; 
-    
-    private List<Prestamo> prestamos; 
-    
+
+    private Prestamo prestamoSeleccionado;
+
+    private List<Prestamo> prestamos;
+
     public VentanaPrestamo() {
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         videojuegoControlador = new VideojuegoController();
         clienteControlador = new ClienteController();
         prestamoControlador = new PrestamoController();
-        
+
         cargarClietes();
         cargarVideojuegos();
         cargarPrestamos();
+
+        aplicarEstilos();
+        
+        pack();
+        setLocationRelativeTo(null);
     }
-    
-    private void cargarClietes(){
+
+    private void aplicarEstilos() {
+
+        getContentPane().setBackground(
+                util.EstilosUI.FONDO
+        );
+
+        util.EstilosUI.estilizarCombo(
+                cmbCliente
+        );
+
+        util.EstilosUI.estilizarCombo(
+                cmbVideojuego
+        );
+
+        util.EstilosUI.estilizarCampo(
+                txtFcehaPrestamo
+        );
+
+        util.EstilosUI.estilizarCampo(
+                txtFechaDevolucion
+        );
+
+        util.EstilosUI.estilizarBoton(
+                btnPrestar
+        );
+
+        util.EstilosUI.estilizarBoton(
+                btnEntregado
+        );
+
+        util.EstilosUI.estilizarTabla(
+                tblPrestamos
+        );
+    }
+
+    private void cargarClietes() {
         cmbCliente.removeAllItems();
         List<Cliente> clientes = clienteControlador.obtener();
-        
-        for(Cliente cliente : clientes){
+
+        for (Cliente cliente : clientes) {
             cmbCliente.addItem(cliente);
         }
     }
-    
-    private void cargarVideojuegos(){
+
+    private void cargarVideojuegos() {
         cmbVideojuego.removeAllItems();
-        
+
         List<Videojuego> videojuegos = videojuegoControlador.obtener();
-        
-        for(Videojuego videojuego : videojuegos){
-            if(videojuego.estaDisponible()){
+
+        for (Videojuego videojuego : videojuegos) {
+            if (videojuego.estaDisponible()) {
                 cmbVideojuego.addItem(videojuego);
             }
         }
     }
-    
-    private void cargarPrestamos(){
-        DefaultTableModel tablaPrestamoModelo = 
-                (DefaultTableModel) tblPrestamos.getModel();
-        
+
+    private void cargarPrestamos() {
+        DefaultTableModel tablaPrestamoModelo
+                = (DefaultTableModel) tblPrestamos.getModel();
+
         tablaPrestamoModelo.setRowCount(0);
-        
+
         prestamos = prestamoControlador.obtner();
-        
-        for(Prestamo prestamo : prestamos){
-            
+
+        for (Prestamo prestamo : prestamos) {
+
             Object[] filaPrestamos = {
                 prestamo.getId(),
                 prestamo.getCliente(),
@@ -87,11 +126,12 @@ public class VentanaPrestamo extends javax.swing.JFrame {
                 prestamo.getFechaPrestamo(),
                 prestamo.getFechaDevolucion()
             };
-            
+
             tablaPrestamoModelo.addRow(filaPrestamos);
         }
-        
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -236,60 +276,60 @@ public class VentanaPrestamo extends javax.swing.JFrame {
 
     private void btnPrestarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrestarActionPerformed
         // TODO add your handling code here:
-        try{
+        try {
             Cliente cliente = (Cliente) cmbCliente.getSelectedItem();
-            
+
             Videojuego videojuego = (Videojuego) cmbVideojuego.getSelectedItem();
-            
+
             LocalDate fechaPrestamo = LocalDate.parse(txtFcehaPrestamo.getText().trim());
-            
+
             LocalDate fechaDevolucion = LocalDate.parse(txtFechaDevolucion.getText().trim());
-            
+
             Prestamo prestamo = new Prestamo(
                     cliente,
                     videojuego,
                     fechaPrestamo,
                     fechaDevolucion
             );
-            
+
             String mensaje = prestamoControlador.guardar(prestamo);
             JOptionPane.showMessageDialog(this, mensaje);
-            
+
             cargarVideojuegos();
             cargarPrestamos();
-            
+
             cmbCliente.setSelectedIndex(0);
             cmbVideojuego.setSelectedIndex(0);
-            
+
             txtFcehaPrestamo.setText("");
             txtFechaDevolucion.setText("");
-            
-        }catch(DateTimeParseException e){
+
+        } catch (DateTimeParseException e) {
             JOptionPane.showMessageDialog(this, "LA FECHA DEBE DE TENER EL FORMATO AAAA-MM-DD");
         }
     }//GEN-LAST:event_btnPrestarActionPerformed
 
     private void btnEntregadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregadoActionPerformed
         // TODO add your handling code here:
-        if(prestamoSeleccionado == null){
+        if (prestamoSeleccionado == null) {
             JOptionPane.showMessageDialog(this, "NO se ha seleccionado ningun prestamo");
-            return; 
+            return;
         }
-        
-        int confirmar = JOptionPane.showConfirmDialog(this, 
-                "Prestamo: " + prestamoSeleccionado.getId()+ " - " + prestamoSeleccionado.getFechaPrestamo() + " \n" 
-                        + prestamoSeleccionado.getCliente() + " \n" + prestamoSeleccionado.getVideojuego(), 
+
+        int confirmar = JOptionPane.showConfirmDialog(this,
+                "Prestamo: " + prestamoSeleccionado.getId() + " - " + prestamoSeleccionado.getFechaPrestamo() + " \n"
+                + prestamoSeleccionado.getCliente() + " \n" + prestamoSeleccionado.getVideojuego(),
                 "Marcar como entregado", JOptionPane.YES_NO_OPTION);
-        
-        if(confirmar != JOptionPane.YES_OPTION){
+
+        if (confirmar != JOptionPane.YES_OPTION) {
             JOptionPane.showMessageDialog(this, "Cancelado");
             return;
         }
-        
+
         String mensaje = prestamoControlador.entregar(prestamoSeleccionado);
-        
+
         JOptionPane.showMessageDialog(this, mensaje);
-        
+
         prestamoSeleccionado = null;
         cargarPrestamos();
         cargarVideojuegos();
@@ -298,28 +338,28 @@ public class VentanaPrestamo extends javax.swing.JFrame {
 
     private void tblPrestamosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPrestamosMouseClicked
         // TODO add your handling code here:
-        int filaSeleccionada = 
-                tblPrestamos.getSelectedRow();
-        
-        if(filaSeleccionada >= 0){
-            
-            int id = 
-                    Integer.parseInt(tblPrestamos.getValueAt(filaSeleccionada, 0).toString());
-            
-            Cliente cliente = 
-                    (Cliente) tblPrestamos.getValueAt(filaSeleccionada, 1);
-            
-            Videojuego videojuego = 
-                    (Videojuego) tblPrestamos.getValueAt(filaSeleccionada, 2);
-            
-            LocalDate fechaPrestamo = 
-                    LocalDate.parse(tblPrestamos.getValueAt(filaSeleccionada, 3).toString());
-            
-            LocalDate fechaDevolucion = 
-                    LocalDate.parse(tblPrestamos.getValueAt(filaSeleccionada, 4).toString());
-            
+        int filaSeleccionada
+                = tblPrestamos.getSelectedRow();
+
+        if (filaSeleccionada >= 0) {
+
+            int id
+                    = Integer.parseInt(tblPrestamos.getValueAt(filaSeleccionada, 0).toString());
+
+            Cliente cliente
+                    = (Cliente) tblPrestamos.getValueAt(filaSeleccionada, 1);
+
+            Videojuego videojuego
+                    = (Videojuego) tblPrestamos.getValueAt(filaSeleccionada, 2);
+
+            LocalDate fechaPrestamo
+                    = LocalDate.parse(tblPrestamos.getValueAt(filaSeleccionada, 3).toString());
+
+            LocalDate fechaDevolucion
+                    = LocalDate.parse(tblPrestamos.getValueAt(filaSeleccionada, 4).toString());
+
             boolean entregado = false;
-            
+
             prestamoSeleccionado = new Prestamo(
                     id,
                     cliente,

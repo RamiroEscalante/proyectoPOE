@@ -9,6 +9,7 @@ import modelo.Cliente;
 import controlador.ClienteController;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author usr
@@ -18,15 +19,51 @@ public class VentanaCliente extends javax.swing.JFrame {
     /**
      * Creates new form VentanaCliente
      */
-   
     ClienteController controlador;
     Cliente clienteSeleccionado;
-    
+
     public VentanaCliente() {
         initComponents();
         controlador = new ClienteController();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         cargarTabla();
+
+        aplicarEstilos();
+
+        setLocationRelativeTo(null);
+        
+        pack();
+    }
+
+    private void aplicarEstilos() {
+
+        getContentPane().setBackground(
+                util.EstilosUI.FONDO
+        );
+
+        util.EstilosUI.estilizarCampo(
+                txtNombre
+        );
+
+        util.EstilosUI.estilizarCampo(
+                txtEdad
+        );
+
+        util.EstilosUI.estilizarBoton(
+                Guardar
+        );
+
+        util.EstilosUI.estilizarBoton(
+                btnActualizar
+        );
+
+        util.EstilosUI.estilizarBoton(
+                btnEliminar
+        );
+
+        util.EstilosUI.estilizarTabla(
+                tblClientes
+        );
     }
 
     /**
@@ -109,10 +146,6 @@ public class VentanaCliente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(Guardar)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -121,12 +154,14 @@ public class VentanaCliente extends javax.swing.JFrame {
                                     .addComponent(lblEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNombre)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
                                     .addComponent(txtEdad)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(0, 151, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(Guardar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnActualizar)
-                                .addGap(62, 62, 62)
+                                .addGap(48, 48, 48)
                                 .addComponent(btnEliminar)))
                         .addGap(18, 18, 18))
                     .addGroup(layout.createSequentialGroup()
@@ -157,43 +192,43 @@ public class VentanaCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cargarTabla(){
-        
-        DefaultTableModel modeloTabla = 
-                (DefaultTableModel) tblClientes.getModel();
-        
+    private void cargarTabla() {
+
+        DefaultTableModel modeloTabla
+                = (DefaultTableModel) tblClientes.getModel();
+
         modeloTabla.setRowCount(0);
-        
+
         List<Cliente> clientes = controlador.obtener();
-        
-        for(Cliente cliente : clientes){
-            
+
+        for (Cliente cliente : clientes) {
+
             Object[] fila = {
                 cliente.getId(),
                 cliente.getNombre(),
                 cliente.getEdad()
             };
-            
+
             modeloTabla.addRow(fila);
         }
-        
+
     }
-    
+
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
         // TODO add your handling code here:
-        
+
         String nombre = txtNombre.getText();
         int edad = Integer.parseInt(txtEdad.getText());
-        
+
         Cliente cliente = new Cliente(
                 nombre,
                 edad
         );
-        
+
         String mensaje = controlador.guardar(cliente);
-        
+
         JOptionPane.showMessageDialog(this, mensaje);
-        
+
         cargarTabla();
         txtEdad.setText("");
         txtNombre.setText("");
@@ -201,29 +236,29 @@ public class VentanaCliente extends javax.swing.JFrame {
 
     private void tblClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientesMouseClicked
         // TODO add your handling code here:
-        
-        int filaSeleccionada = 
-                tblClientes.getSelectedRow();
-        
-        if(filaSeleccionada >= 0){
-            
-            int id = 
-                    Integer.parseInt(
+
+        int filaSeleccionada
+                = tblClientes.getSelectedRow();
+
+        if (filaSeleccionada >= 0) {
+
+            int id
+                    = Integer.parseInt(
                             tblClientes
-                            .getValueAt(filaSeleccionada, 0)
-                            .toString()
+                                    .getValueAt(filaSeleccionada, 0)
+                                    .toString()
                     );
-            
-            String nombre = 
-                    tblClientes
-                    .getValueAt(filaSeleccionada, 1)
-                    .toString();
-            
-            String edad =
-                    tblClientes.getValueAt(filaSeleccionada, 2).toString();
-            
+
+            String nombre
+                    = tblClientes
+                            .getValueAt(filaSeleccionada, 1)
+                            .toString();
+
+            String edad
+                    = tblClientes.getValueAt(filaSeleccionada, 2).toString();
+
             clienteSeleccionado = new Cliente(id, nombre, Integer.parseInt(edad));
-            
+
             txtEdad.setText(edad);
             txtNombre.setText(nombre);
         }
@@ -231,23 +266,23 @@ public class VentanaCliente extends javax.swing.JFrame {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
-        if(clienteSeleccionado == null){
+        if (clienteSeleccionado == null) {
             JOptionPane.showMessageDialog(this, "NO se ha seleccionado ningun cliente");
             return;
         }
-        
+
         String nombre = txtNombre.getText();
         int edad = Integer.parseInt(txtEdad.getText());
-        
+
         Cliente clienteActualizar = new Cliente(
                 clienteSeleccionado.getId(),
                 nombre,
                 edad
         );
-        
+
         String mensaje = controlador.actualizar(clienteActualizar);
         JOptionPane.showMessageDialog(this, mensaje);
-        
+
         cargarTabla();
         clienteSeleccionado = null;
         txtEdad.setText("");
@@ -256,24 +291,24 @@ public class VentanaCliente extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        if(clienteSeleccionado == null ){
+        if (clienteSeleccionado == null) {
             JOptionPane.showMessageDialog(this, "No se selecciono ningun cliente");
             return;
-        } 
-        
-        int confirmacion = 
-                JOptionPane.showConfirmDialog(this, "Eliminar cliente " + clienteSeleccionado.getNombre(), "Eliminar Cliente", JOptionPane.YES_NO_OPTION);
-        
-        if(confirmacion != JOptionPane.YES_OPTION){
+        }
+
+        int confirmacion
+                = JOptionPane.showConfirmDialog(this, "Eliminar cliente " + clienteSeleccionado.getNombre(), "Eliminar Cliente", JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion != JOptionPane.YES_OPTION) {
             JOptionPane.showMessageDialog(this, "Cancelado");
             return;
         }
-        
+
         String mensaje = controlador.eliminar(clienteSeleccionado);
-        
+
         JOptionPane.showMessageDialog(this, mensaje);
         cargarTabla();
-        
+
         clienteSeleccionado = null;
         txtEdad.setText("");
         txtNombre.setText("");

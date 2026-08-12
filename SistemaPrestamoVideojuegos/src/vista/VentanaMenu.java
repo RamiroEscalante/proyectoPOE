@@ -3,9 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package vista;
+
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import modelo.Prestamo;
 import vista.VentanaCliente;
 import vista.VentanaVideojuegos;
+
 /**
  *
  * @author usr
@@ -17,6 +21,46 @@ public class VentanaMenu extends javax.swing.JFrame {
      */
     public VentanaMenu() {
         initComponents();
+        
+        cargarImagenMenu();
+        aplicarEstilos();
+        pack();
+        setLocationRelativeTo(null);
+    }
+
+    private void cargarImagenMenu() {
+        ImageIcon icono = new ImageIcon(
+                getClass().getResource(
+                        "/recursos/imagenes/menu.png"
+                )
+        );
+
+        Image imagen = icono.getImage().getScaledInstance(
+                60,
+                120,
+                Image.SCALE_SMOOTH
+        );
+
+        lblImagenMenu.setIcon(new ImageIcon(imagen));
+    }
+
+    private void aplicarEstilos() {
+
+        getContentPane().setBackground(
+                util.EstilosUI.FONDO
+        );
+
+        util.EstilosUI.estilizarBoton(
+                btnVideojuego
+        );
+
+        util.EstilosUI.estilizarBoton(
+                btnClientes
+        );
+
+        util.EstilosUI.estilizarBoton(
+                btnPrestamos
+        );
     }
 
     /**
@@ -33,28 +77,34 @@ public class VentanaMenu extends javax.swing.JFrame {
         btnVideojuego = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
         btnPrestamos = new javax.swing.JButton();
+        lblImagenMenu = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        lblTituloSelecciona.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTituloSelecciona.setText("Que quieres hacer?");
 
+        lblMenu.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
         lblMenu.setText("MENU");
 
-        btnVideojuego.setText("Ir a videojuegos");
+        btnVideojuego.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnVideojuego.setText("Videojuegos");
         btnVideojuego.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVideojuegoActionPerformed(evt);
             }
         });
 
-        btnClientes.setText("Ir a Clientes");
+        btnClientes.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnClientes.setText("Clientes");
         btnClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnClientesActionPerformed(evt);
             }
         });
 
-        btnPrestamos.setText("Ir a Prestamos");
+        btnPrestamos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnPrestamos.setText("Prestamos");
         btnPrestamos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPrestamosActionPerformed(evt);
@@ -68,33 +118,36 @@ public class VentanaMenu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(47, 47, 47)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnVideojuego)
+                            .addComponent(lblTituloSelecciona)
+                            .addComponent(btnClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnPrestamos, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(lblTituloSelecciona))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnVideojuego, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnPrestamos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(31, Short.MAX_VALUE))
+                        .addGap(79, 79, 79)
+                        .addComponent(lblMenu)))
+                .addContainerGap(33, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblImagenMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(lblImagenMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblMenu)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTituloSelecciona, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnVideojuego)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnClientes)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnPrestamos)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
 
         pack();
@@ -123,6 +176,7 @@ public class VentanaMenu extends javax.swing.JFrame {
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnPrestamos;
     private javax.swing.JButton btnVideojuego;
+    private javax.swing.JLabel lblImagenMenu;
     private javax.swing.JLabel lblMenu;
     private javax.swing.JLabel lblTituloSelecciona;
     // End of variables declaration//GEN-END:variables

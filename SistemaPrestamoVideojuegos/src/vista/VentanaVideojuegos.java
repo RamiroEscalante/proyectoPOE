@@ -18,9 +18,10 @@ import modelo.EstadoVideojuego;
  * @author usr
  */
 public class VentanaVideojuegos extends javax.swing.JFrame {
-    
-    private VideojuegoController controlador; 
+
+    private VideojuegoController controlador;
     private Videojuego videojuegoSeleccionado;
+
     /**
      * Creates new form VentanaVideojuegos
      */
@@ -30,6 +31,42 @@ public class VentanaVideojuegos extends javax.swing.JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         cargarConsolas();
         cargarTabla();
+
+        aplicarEstilos();
+
+        setLocationRelativeTo(null);
+        pack();
+    }
+
+    private void aplicarEstilos() {
+
+        getContentPane().setBackground(
+                util.EstilosUI.FONDO
+        );
+
+        util.EstilosUI.estilizarCampo(
+                txtNombre
+        );
+
+        util.EstilosUI.estilizarCombo(
+                cmbConsola
+        );
+
+        util.EstilosUI.estilizarBoton(
+                btnGuardar
+        );
+
+        util.EstilosUI.estilizarBoton(
+                btnActualizar
+        );
+
+        util.EstilosUI.estilizarBoton(
+                btnEliminar
+        );
+
+        util.EstilosUI.estilizarTabla(
+                tblVideojuegos
+        );
     }
 
     /**
@@ -156,35 +193,35 @@ public class VentanaVideojuegos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cargarConsolas(){
+    private void cargarConsolas() {
         cmbConsola.removeAllItems();
-        for(ConsolaVideojuego consola : ConsolaVideojuego.values()){
+        for (ConsolaVideojuego consola : ConsolaVideojuego.values()) {
             cmbConsola.addItem(consola);
         }
     }
-    
-    private void cargarTabla(){
-        DefaultTableModel modeloTabla =
-                (DefaultTableModel) tblVideojuegos.getModel();
-        
+
+    private void cargarTabla() {
+        DefaultTableModel modeloTabla
+                = (DefaultTableModel) tblVideojuegos.getModel();
+
         modeloTabla.setRowCount(0);
-        
+
         List<Videojuego> videojuegos = controlador.obtener();
-        
-        for(Videojuego videojuego: videojuegos){
-            
+
+        for (Videojuego videojuego : videojuegos) {
+
             Object[] fila = {
                 videojuego.getId(),
                 videojuego.getNombre(),
                 videojuego.getConsola(),
                 videojuego.getDisponibilidad()
             };
-            
+
             modeloTabla.addRow(fila);
         }
-                
+
     }
-    
+
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         String nombre = txtNombre.getText().trim();
@@ -198,37 +235,37 @@ public class VentanaVideojuegos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void tblVideojuegosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblVideojuegosMouseClicked
-        int filaSeleccionada = 
-                tblVideojuegos.getSelectedRow();
-        
-        if(filaSeleccionada >= 0){
-            
-            int id = 
-                    Integer.parseInt(
+        int filaSeleccionada
+                = tblVideojuegos.getSelectedRow();
+
+        if (filaSeleccionada >= 0) {
+
+            int id
+                    = Integer.parseInt(
                             tblVideojuegos
-                            .getValueAt(filaSeleccionada,0)
-                            .toString()
+                                    .getValueAt(filaSeleccionada, 0)
+                                    .toString()
                     );
-            
-            String nombre =
-                    tblVideojuegos
-                    .getValueAt(filaSeleccionada, 1)
-                    .toString();
-            
-            ConsolaVideojuego consola = 
-                    ConsolaVideojuego.valueOf(
+
+            String nombre
+                    = tblVideojuegos
+                            .getValueAt(filaSeleccionada, 1)
+                            .toString();
+
+            ConsolaVideojuego consola
+                    = ConsolaVideojuego.valueOf(
                             tblVideojuegos.getValueAt(filaSeleccionada, 2)
-                            .toString()
+                                    .toString()
                     );
-            
-            EstadoVideojuego estado = 
-                    EstadoVideojuego.valueOf(
+
+            EstadoVideojuego estado
+                    = EstadoVideojuego.valueOf(
                             tblVideojuegos.getValueAt(filaSeleccionada, 3)
-                            .toString()
+                                    .toString()
                     );
-            
+
             videojuegoSeleccionado = new Videojuego(id, nombre, consola, estado);
-            
+
             txtNombre.setText(nombre);
             cmbConsola.setSelectedItem(consola);
         }
@@ -236,28 +273,27 @@ public class VentanaVideojuegos extends javax.swing.JFrame {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
-        
-        if(videojuegoSeleccionado == null){
+
+        if (videojuegoSeleccionado == null) {
             JOptionPane.showMessageDialog(this, "No se ha seleccionado un videojuego");
-            return; 
+            return;
         }
-        
+
         String nombre = txtNombre.getText().trim();
         ConsolaVideojuego consola = (ConsolaVideojuego) cmbConsola.getSelectedItem();
-        
+
         Videojuego videojuegoActualizado = new Videojuego(
                 videojuegoSeleccionado.getId(),
                 nombre,
                 consola,
                 videojuegoSeleccionado.getDisponibilidad()
         );
-        
-        
+
         String mensaje = controlador.actualizar(videojuegoActualizado);
-        
+
         JOptionPane.showMessageDialog(this, mensaje);
         cargarTabla();
-        
+
         videojuegoSeleccionado = null;
         txtNombre.setText("");
         cmbConsola.setSelectedIndex(0);
@@ -266,33 +302,32 @@ public class VentanaVideojuegos extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        
-        if(videojuegoSeleccionado == null){
+
+        if (videojuegoSeleccionado == null) {
             JOptionPane.showMessageDialog(this, "No se ha seleccionado ningun videojuego");
             return;
         }
-        
-        int confirmacion = 
-                JOptionPane.showConfirmDialog(this, "Desea Eliminar el juego " + videojuegoSeleccionado.getId() + ": " + videojuegoSeleccionado.getNombre(), "Eliminar", JOptionPane.YES_NO_OPTION);
-        
-        if(confirmacion != JOptionPane.YES_OPTION){
+
+        int confirmacion
+                = JOptionPane.showConfirmDialog(this, "Desea Eliminar el juego " + videojuegoSeleccionado.getId() + ": " + videojuegoSeleccionado.getNombre(), "Eliminar", JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion != JOptionPane.YES_OPTION) {
             JOptionPane.showMessageDialog(this, "Cancelado");
-            return; 
+            return;
         }
-        
-        
+
         String mensaje = controlador.eliminar(videojuegoSeleccionado);
-        
+
         JOptionPane.showMessageDialog(this, mensaje);
         cargarTabla();
-        
+
         videojuegoSeleccionado = null;
         txtNombre.setText("");
         cmbConsola.setSelectedIndex(0);
         tblVideojuegos.clearSelection();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnEliminar;
