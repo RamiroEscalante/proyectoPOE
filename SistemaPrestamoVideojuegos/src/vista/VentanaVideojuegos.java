@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.ConsolaVideojuego;
 import modelo.Videojuego;
-import servicio.VideojuegoService;
+import controlador.VideojuegoController;
 import java.util.List;
 import javax.swing.JFrame;
 import modelo.EstadoVideojuego;
@@ -19,14 +19,14 @@ import modelo.EstadoVideojuego;
  */
 public class VentanaVideojuegos extends javax.swing.JFrame {
     
-    private VideojuegoService servicio; 
+    private VideojuegoController controlador; 
     private Videojuego videojuegoSeleccionado;
     /**
      * Creates new form VentanaVideojuegos
      */
     public VentanaVideojuegos() {
         initComponents();
-        servicio = new VideojuegoService();
+        controlador = new VideojuegoController();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         cargarConsolas();
         cargarTabla();
@@ -169,7 +169,7 @@ public class VentanaVideojuegos extends javax.swing.JFrame {
         
         modeloTabla.setRowCount(0);
         
-        List<Videojuego> videojuegos = servicio.obtener();
+        List<Videojuego> videojuegos = controlador.obtener();
         
         for(Videojuego videojuego: videojuegos){
             
@@ -190,7 +190,7 @@ public class VentanaVideojuegos extends javax.swing.JFrame {
         String nombre = txtNombre.getText().trim();
         ConsolaVideojuego consola = (ConsolaVideojuego) cmbConsola.getSelectedItem();
         Videojuego videojuego = new Videojuego(nombre, consola);
-        String mensaje = servicio.guardar(videojuego);
+        String mensaje = controlador.guardar(videojuego);
         JOptionPane.showMessageDialog(this, mensaje);
         cargarTabla();
         txtNombre.setText("");
@@ -253,7 +253,7 @@ public class VentanaVideojuegos extends javax.swing.JFrame {
         );
         
         
-        String mensaje = servicio.actualizar(videojuegoActualizado);
+        String mensaje = controlador.actualizar(videojuegoActualizado);
         
         JOptionPane.showMessageDialog(this, mensaje);
         cargarTabla();
@@ -281,7 +281,7 @@ public class VentanaVideojuegos extends javax.swing.JFrame {
         }
         
         
-        String mensaje = servicio.eliminar(videojuegoSeleccionado);
+        String mensaje = controlador.eliminar(videojuegoSeleccionado);
         
         JOptionPane.showMessageDialog(this, mensaje);
         cargarTabla();

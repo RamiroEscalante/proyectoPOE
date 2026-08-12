@@ -6,7 +6,7 @@ package vista;
 
 import javax.swing.JOptionPane;
 import modelo.Cliente;
-import servicio.ClienteService;
+import controlador.ClienteController;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -18,13 +18,13 @@ public class VentanaCliente extends javax.swing.JFrame {
     /**
      * Creates new form VentanaCliente
      */
-    
-    ClienteService servicio;
+   
+    ClienteController controlador;
     Cliente clienteSeleccionado;
     
     public VentanaCliente() {
         initComponents();
-        servicio = new ClienteService();
+        controlador = new ClienteController();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         cargarTabla();
     }
@@ -164,7 +164,7 @@ public class VentanaCliente extends javax.swing.JFrame {
         
         modeloTabla.setRowCount(0);
         
-        List<Cliente> clientes = servicio.obtener();
+        List<Cliente> clientes = controlador.obtener();
         
         for(Cliente cliente : clientes){
             
@@ -190,7 +190,7 @@ public class VentanaCliente extends javax.swing.JFrame {
                 edad
         );
         
-        String mensaje = servicio.guardar(cliente);
+        String mensaje = controlador.guardar(cliente);
         
         JOptionPane.showMessageDialog(this, mensaje);
         
@@ -245,7 +245,7 @@ public class VentanaCliente extends javax.swing.JFrame {
                 edad
         );
         
-        String mensaje = servicio.actualizar(clienteActualizar);
+        String mensaje = controlador.actualizar(clienteActualizar);
         JOptionPane.showMessageDialog(this, mensaje);
         
         cargarTabla();
@@ -269,7 +269,7 @@ public class VentanaCliente extends javax.swing.JFrame {
             return;
         }
         
-        String mensaje = servicio.eliminar(clienteSeleccionado);
+        String mensaje = controlador.eliminar(clienteSeleccionado);
         
         JOptionPane.showMessageDialog(this, mensaje);
         cargarTabla();

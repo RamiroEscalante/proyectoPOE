@@ -11,12 +11,13 @@ import java.time.format.DateTimeParseException;
 import javax.swing.JOptionPane;
 
 import modelo.Cliente;
+import modelo.EstadoVideojuego;
 import modelo.Videojuego;
 import modelo.Prestamo;
 
-import servicio.ClienteService;
-import servicio.PrestamoService;
-import servicio.VideojuegoService;
+import controlador.PrestamoController;
+import controlador.ClienteController;
+import controlador.VideojuegoController;
 
 /**
  *
@@ -28,9 +29,9 @@ public class VentanaPrestamo extends javax.swing.JFrame {
      * Creates new form VentanaPrestamo
      */
     
-    private PrestamoService prestamoServicio;
-    private VideojuegoService videojuegoServicio;
-    private ClienteService clienteServicio;
+    private VideojuegoController videojuegoControlador;
+    private ClienteController clienteControlador;
+    private PrestamoController prestamoControlador;
     
     private Prestamo prestamoSeleccionado; 
     
@@ -39,9 +40,9 @@ public class VentanaPrestamo extends javax.swing.JFrame {
     public VentanaPrestamo() {
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        prestamoServicio = new PrestamoService();
-        videojuegoServicio = new VideojuegoService();
-        clienteServicio = new ClienteService();
+        videojuegoControlador = new VideojuegoController();
+        clienteControlador = new ClienteController();
+        prestamoControlador = new PrestamoController();
         
         cargarClietes();
         cargarVideojuegos();
@@ -50,7 +51,7 @@ public class VentanaPrestamo extends javax.swing.JFrame {
     
     private void cargarClietes(){
         cmbCliente.removeAllItems();
-        List<Cliente> clientes = clienteServicio.obtener();
+        List<Cliente> clientes = clienteControlador.obtener();
         
         for(Cliente cliente : clientes){
             cmbCliente.addItem(cliente);
@@ -60,10 +61,12 @@ public class VentanaPrestamo extends javax.swing.JFrame {
     private void cargarVideojuegos(){
         cmbVideojuego.removeAllItems();
         
-        List<Videojuego> videojuegos = videojuegoServicio.obtener();
+        List<Videojuego> videojuegos = videojuegoControlador.obtener();
         
         for(Videojuego videojuego : videojuegos){
-            cmbVideojuego.addItem(videojuego);
+            if(videojuego.estaDisponible()){
+                cmbVideojuego.addItem(videojuego);
+            }
         }
     }
     
@@ -73,7 +76,7 @@ public class VentanaPrestamo extends javax.swing.JFrame {
         
         tablaPrestamoModelo.setRowCount(0);
         
-        prestamos = prestamoServicio.obtener();
+        prestamos = prestamoControlador.obtner();
         
         for(Prestamo prestamo : prestamos){
             
@@ -249,7 +252,7 @@ public class VentanaPrestamo extends javax.swing.JFrame {
                     fechaDevolucion
             );
             
-            String mensaje = prestamoServicio.guardar(prestamo);
+            String mensaje = prestamoControlador.guardar(prestamo);
             JOptionPane.showMessageDialog(this, mensaje);
             
             cargarVideojuegos();
@@ -283,13 +286,14 @@ public class VentanaPrestamo extends javax.swing.JFrame {
             return;
         }
         
-        String mensaje = prestamoServicio.entregar(prestamoSeleccionado);
+        String mensaje = prestamoControlador.entregar(prestamoSeleccionado);
         
         JOptionPane.showMessageDialog(this, mensaje);
         
         prestamoSeleccionado = null;
         cargarPrestamos();
         cargarVideojuegos();
+        tblPrestamos.clearSelection();
     }//GEN-LAST:event_btnEntregadoActionPerformed
 
     private void tblPrestamosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPrestamosMouseClicked

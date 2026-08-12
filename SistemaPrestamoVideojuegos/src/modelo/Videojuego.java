@@ -8,8 +8,8 @@ package modelo;
  *
  * @author usr
  */
-public class Videojuego {
-    private int id; 
+public class Videojuego extends Entidad{
+    
     private String nombre;
     private ConsolaVideojuego consola;
     private EstadoVideojuego disponibilidad;
@@ -27,10 +27,6 @@ public class Videojuego {
         this.nombre = nombre;
         this.consola = consola; 
         this.disponibilidad = disponibilidad;
-    }
-    
-    public int getId(){
-        return this.id;
     }
     
     public String getNombre(){
@@ -70,7 +66,12 @@ public class Videojuego {
     }
     
     @Override
-    public String toString(){
+    public String getDescripcion(){
         return nombre + " - " + consola;
+    }
+    
+    @Override
+    public String toString(){
+        return getDescripcion();
     }
 }

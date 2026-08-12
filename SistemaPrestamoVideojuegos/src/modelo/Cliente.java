@@ -8,9 +8,8 @@ package modelo;
  *
  * @author usr
  */
-public class Cliente {
+public class Cliente extends Entidad {
     
-    private int id;
     private String nombre;
     private int edad;
     
@@ -23,10 +22,6 @@ public class Cliente {
         this.id = id;
         this.nombre = nombre;
         this.edad = edad;
-    }
-    
-    public int getId(){
-        return this.id;
     }
     
     public String getNombre(){
@@ -46,7 +41,12 @@ public class Cliente {
     }
     
     @Override
-    public String toString(){
+    public String getDescripcion(){
         return nombre + " - " + edad;
+    }
+    
+    @Override
+    public String toString(){
+        return getDescripcion();
     }
 }
