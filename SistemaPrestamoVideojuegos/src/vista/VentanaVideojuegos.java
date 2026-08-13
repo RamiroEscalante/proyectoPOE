@@ -12,6 +12,7 @@ import controlador.VideojuegoController;
 import java.util.List;
 import javax.swing.JFrame;
 import modelo.EstadoVideojuego;
+import util.EstilosUI;
 
 /**
  *
@@ -41,31 +42,39 @@ public class VentanaVideojuegos extends javax.swing.JFrame {
     private void aplicarEstilos() {
 
         getContentPane().setBackground(
-                util.EstilosUI.FONDO
+                EstilosUI.FONDO
         );
 
-        util.EstilosUI.estilizarCampo(
+        EstilosUI.estilizarCampo(
                 txtNombre
         );
 
-        util.EstilosUI.estilizarCombo(
+        EstilosUI.estilizarCombo(
                 cmbConsola
         );
 
-        util.EstilosUI.estilizarBoton(
+        EstilosUI.estilizarBoton(
                 btnGuardar
         );
 
-        util.EstilosUI.estilizarBoton(
+        EstilosUI.estilizarBoton(
                 btnActualizar
         );
 
-        util.EstilosUI.estilizarBoton(
+        EstilosUI.estilizarBotonPeligro(
                 btnEliminar
         );
 
-        util.EstilosUI.estilizarTabla(
+        EstilosUI.estilizarTabla(
                 tblVideojuegos
+        );
+
+        lblNombre.setForeground(
+                EstilosUI.TEXTO
+        );
+
+        lblConsola.setForeground(
+                EstilosUI.TEXTO
         );
     }
 

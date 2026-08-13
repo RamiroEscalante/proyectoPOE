@@ -57,7 +57,7 @@ public class VentanaCliente extends javax.swing.JFrame {
                 btnActualizar
         );
 
-        util.EstilosUI.estilizarBoton(
+        util.EstilosUI.estilizarBotonPeligro(
                 btnEliminar
         );
 
